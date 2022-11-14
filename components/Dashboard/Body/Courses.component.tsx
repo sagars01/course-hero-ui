@@ -4,9 +4,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
+import { ICourse } from "../../../pages/creator/home/services/types/courses.interface";
 
-export default function CourseComponent() {
-  const CourseCard = () => {
+export default function CourseComponent({ userCreatedCourse }: IProps) {
+  const CourseCard = ({ course }: any) => {
     return (
       <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
@@ -18,11 +19,10 @@ export default function CourseComponent() {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Lizard
+              {course.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              {course.short_desc}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -34,5 +34,17 @@ export default function CourseComponent() {
       </Card>
     );
   };
-  return <CourseCard />;
+  return (
+    <>
+      {userCreatedCourse?.map((course) => (
+        <>
+          <CourseCard course={course} />
+        </>
+      ))}
+    </>
+  );
+}
+
+interface IProps {
+  userCreatedCourse: [ICourse];
 }
