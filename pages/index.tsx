@@ -9,7 +9,7 @@ export default function Home() {
         <title>Course Hero</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Link href={"/dashboard"}>Here</Link>
+      <Link href={"/creator/home"}>Here</Link>
     </>
   )
 }

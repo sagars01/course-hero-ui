@@ -5,6 +5,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { ICourse } from "../../../pages/creator/home/services/types/courses.interface";
+import {
+  CourseBodyActions,
+  CourseDashboardBody,
+  StyledDashboardBody,
+} from "../dashboard.styles";
 
 export default function CourseComponent({ userCreatedCourse }: IProps) {
   const CourseCard = ({ course }: any) => {
@@ -36,11 +41,11 @@ export default function CourseComponent({ userCreatedCourse }: IProps) {
   };
   return (
     <>
-      {userCreatedCourse?.map((course) => (
-        <>
-          <CourseCard course={course} />
-        </>
-      ))}
+      <CourseDashboardBody>
+        {userCreatedCourse?.map((course, idx) => (
+          <CourseCard course={course} id={idx} key={idx} />
+        ))}
+      </CourseDashboardBody>
     </>
   );
 }
