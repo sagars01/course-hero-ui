@@ -17,11 +17,12 @@ export const GetAllCourses = (): Promise<ICourseResponse> => {
                     resolve(response);
                 }).catch((error) => {
                     console.error(error);
-                    reject(error)
+                    reject({ message: "Error" });
                 })
 
-        } catch {
-            reject("Unknown Error");
+        } catch (e) {
+            console.error("Here: ", e)
+            reject({ message: "Unknown Error" });
         }
     })
 }

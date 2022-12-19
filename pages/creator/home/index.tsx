@@ -3,13 +3,22 @@ import Head from "next/head";
 import { GetAllCourses } from "./services/getAllCourses";
 import CreatedCourses from "../../../components/Dashboard/Body/Courses.component";
 import SelectionPanel from "../../../components/Dashboard/Body/SelectionPanel.component";
-export default function CreatorHome({ allCoursesData: { courses } }: any) {
-  
+import AlertError from "../../../components/Error/Alert.error";
+
+export default function CreatorHome({
+  allCoursesData: { courses, error },
+}: any) {
   const MainContent = () => {
     return (
       <>
         <SelectionPanel></SelectionPanel>
-        <CreatedCourses userCreatedCourse={courses} />
+        {error ? (
+          
+            <AlertError message="Error Fetching Posts" />
+          
+        ) : (
+          <CreatedCourses userCreatedCourse={courses} />
+        )}
       </>
     );
   };
@@ -24,7 +33,14 @@ export default function CreatorHome({ allCoursesData: { courses } }: any) {
 }
 
 export async function getServerSideProps(_context: any) {
-  const allCoursesData = await GetAllCourses();
+  let allCoursesData = {};
+  try {
+    allCoursesData = await GetAllCourses();
+  } catch (e) {
+    allCoursesData = {
+      error: true,
+    };
+  }
   return {
     props: {
       allCoursesData,
