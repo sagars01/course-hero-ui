@@ -1,4 +1,7 @@
-import { Card, CardContent, styled, useMediaQuery, Theme } from "@mui/material";
+import { Card, CardContent, styled } from "@mui/material";
+import React from "react";
+import EmailAuthForm from "../../components/Auth/EmailAuth";
+import { signInEmailLink } from "./firebase.services";
 
 const Root = styled("div")(({ theme }) => ({
   display: "flex",
@@ -18,14 +21,16 @@ const CardWrapper = styled(Card)(({ theme }) => ({
 }));
 
 export default function CenteredCard() {
-  const isSmallScreen = useMediaQuery<Theme>((theme) =>
-    theme.breakpoints.down("sm")
-  );
+  const handleEmailAuthSubmit = (email: string | null): void => {
+    if (email) signInEmailLink(email, window.location.origin + "/auth/verify");
+  };
 
   return (
     <Root>
       <CardWrapper>
-        <CardContent>This is a centered card.</CardContent>
+        <CardContent>
+          <EmailAuthForm onSubmit={handleEmailAuthSubmit} />
+        </CardContent>
       </CardWrapper>
     </Root>
   );

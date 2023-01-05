@@ -8,9 +8,10 @@ import {
 
 import "../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import type { AppProps } from "next/app";
-import React from "react";
+import React, { useEffect } from "react";
 import { darkTheme } from "../themes/dark";
 import { lightTheme } from "../themes/light";
+import initFirebase from "../utils/auth/firebase";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [mode, setMode] = React.useState<PaletteMode>("light");
@@ -18,6 +19,10 @@ export default function App({ Component, pageProps }: AppProps) {
     () => createTheme(mode === "light" ? lightTheme : darkTheme),
     [mode]
   );
+
+  useEffect(() => {
+    initFirebase();
+  }, []);
 
   return (
     <>
