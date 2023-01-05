@@ -5,20 +5,26 @@ import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/au
 import { firebaseConfig } from "../../utils/auth/firebase";
 
 
-export const signInEmailLink = (email: string, actionUrl: string) => {
+export const signInEmailLink = async (email: string, actionUrl: string): Promise<any> => {
     const actionCodeSettings = {
         url: actionUrl,
         handleCodeInApp: true
     };
-    firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-        .then(() => {
-            // The link was successfully sent. Inform the user.
-            window.localStorage.setItem('emailForSignIn', email);
-        })
-        .catch(error => {
-            // An error occurred.
-            console.error('Error sending email link:', error);
-        })
+    const dataModel = {
+        error: false,
+        success: false,
+    }
+    try {
+        const data = await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+        window.localStorage.setItem('emailForSignIn', email);
+        dataModel.success = true;
+        return dataModel;
+    } catch (e) {
+        console.error('Error sending email link:', e);
+        dataModel.error = true;
+        return dataModel;
+    }
+
 }
 
 

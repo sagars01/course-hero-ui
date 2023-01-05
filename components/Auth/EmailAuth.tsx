@@ -15,18 +15,19 @@ export default function EmailAuthForm({ onSubmit }: IProps) {
   const { email, error, validateEmail } = useEmailValidator();
   return (
     <FormControl style={{ width: "100%" }}>
-      <InputLabel htmlFor="my-input">Email address</InputLabel>
+      <InputLabel htmlFor="my-input">Enter email for magical login link</InputLabel>
       <Input
         id="my-input"
         onChange={validateEmail}
         aria-describedby="my-helper-text"
       />
       <Button
+        style={{margin: '1rem 0'}}
         onClick={() => onSubmit(email)}
-        type="submit"
+        variant="contained"
         disabled={error ? true : false}
       >
-        Send Login Link
+        Get the magic login link
       </Button>
       {error ? (
         <FormHelperText id="my-helper-text">{error}</FormHelperText>
