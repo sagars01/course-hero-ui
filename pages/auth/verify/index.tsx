@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { checkSignInWithEmailLink } from "../firebase.services";
+import { checkSignInWithEmailLink } from "../../../utils/auth/firebase.services";
 
 export default function AuthVerify() {
   useEffect(() => {

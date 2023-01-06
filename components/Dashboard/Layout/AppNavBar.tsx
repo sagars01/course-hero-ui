@@ -16,6 +16,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { AppGlobal } from "../../../utils/app.constants";
+import { AccountCircleOutlined } from "@mui/icons-material";
+
+interface IAppNavbar {
+  isLoggedIn: boolean | undefined;
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,7 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ isLoggedIn }: IAppNavbar) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -82,6 +87,10 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () => {
+    handleMenuClose();
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -99,8 +108,17 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {isLoggedIn ? (
+        <>
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem onClick={handleMenuClose}>Login</MenuItem>
+        </>
+      )}
     </Menu>
   );
 
@@ -215,7 +233,7 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {isLoggedIn ? <AccountCircle /> : <AccountCircleOutlined />}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

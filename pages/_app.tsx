@@ -12,6 +12,7 @@ import React, { useEffect } from "react";
 import { darkTheme } from "../themes/dark";
 import { lightTheme } from "../themes/light";
 import initFirebase from "../utils/auth/firebase";
+import { NotificationProvider } from "../utils/notifications/notification.provider";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [mode, setMode] = React.useState<PaletteMode>("light");
@@ -19,16 +20,14 @@ export default function App({ Component, pageProps }: AppProps) {
     () => createTheme(mode === "light" ? lightTheme : darkTheme),
     [mode]
   );
-
-  useEffect(() => {
-    initFirebase();
-  }, []);
-
+  initFirebase();
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <Component {...pageProps} />
+        <NotificationProvider>
+          <Component {...pageProps} />
+        </NotificationProvider>
       </ThemeProvider>
     </>
   );

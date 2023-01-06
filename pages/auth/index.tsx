@@ -9,7 +9,7 @@ import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlin
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import React, { useState } from "react";
 import EmailAuthForm from "../../components/Auth/EmailAuth";
-import { signInEmailLink } from "./firebase.services";
+import { signInEmailLink } from "../../utils/auth/firebase.services";
 
 const Root = styled("div")(({ theme }) => ({
   display: "flex",

@@ -2,7 +2,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
-import { firebaseConfig } from "../../utils/auth/firebase";
+import { firebaseConfig } from "./firebase";
+import { useRouter } from 'next/router';
 
 
 export const signInEmailLink = async (email: string, actionUrl: string): Promise<any> => {
@@ -29,9 +30,7 @@ export const signInEmailLink = async (email: string, actionUrl: string): Promise
 
 
 export const checkSignInWithEmailLink = () => {
-
     const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
-
     const auth: any = getAuth(app);
     if (isSignInWithEmailLink(auth, window.location.href)) {
         // Additional state parameters can also be passed via URL.
@@ -64,4 +63,14 @@ export const checkSignInWithEmailLink = () => {
                 console.error(error);
             });
     }
+}
+
+export const SignOut = () => {
+    const router = useRouter();
+    firebase.auth().signOut().then((result) => {
+        router.push("/auth")
+    }).catch((error) => {
+        // Build a global error handler
+        console.error(error);
+    })
 }
