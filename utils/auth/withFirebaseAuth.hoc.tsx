@@ -25,7 +25,7 @@ const withFirebaseAuth = <P extends object>(
           setUser(user);
           setIsLoading(false);
         } else {
-          router.push("/login");
+          router.push("/auth");
         }
       });
     }, []);

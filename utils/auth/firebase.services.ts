@@ -3,7 +3,6 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import { firebaseConfig } from "./firebase";
-import { useRouter } from 'next/router';
 
 
 export const signInEmailLink = async (email: string, actionUrl: string): Promise<any> => {
@@ -65,12 +64,13 @@ export const checkSignInWithEmailLink = () => {
     }
 }
 
-export const SignOut = () => {
-    const router = useRouter();
-    firebase.auth().signOut().then((result) => {
-        router.push("/auth")
-    }).catch((error) => {
-        // Build a global error handler
+export const SignOut = async () => {
+    try {
+        await firebase.auth().signOut()
+        return true;
+    } catch (error) {
         console.error(error);
-    })
+        return false;
+    }
+
 }

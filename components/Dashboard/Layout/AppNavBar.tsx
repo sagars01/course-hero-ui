@@ -17,6 +17,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { AppGlobal } from "../../../utils/app.constants";
 import { AccountCircleOutlined } from "@mui/icons-material";
+import { useNotifications } from "../../../utils/notifications/notification.provider";
+import { SignOut } from "../../../utils/auth/firebase.services";
 
 interface IAppNavbar {
   isLoggedIn: boolean | undefined;
@@ -87,7 +89,15 @@ export default function PrimarySearchAppBar({ isLoggedIn }: IAppNavbar) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const success = await SignOut();
+    const { addNotification } = useNotifications();
+    if (success) {
+      addNotification({ id: "Id 1", message: "Messages" });
+    } else {
+      addNotification({ id: "Id 1", message: "Error Messages" });
+    }
+
     handleMenuClose();
   };
 
