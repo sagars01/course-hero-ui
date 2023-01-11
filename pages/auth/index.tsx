@@ -35,7 +35,7 @@ const StateWrapper = styled("div")`
   margin: 0.5rem 0;
 `;
 
-export default function CenteredCard() {
+export default function AuthSignIn() {
   const [formState, setFormState] = useState<any>(null);
   const handleEmailAuthSubmit = async (email: string | null): Promise<void> => {
     setFormState("loading");

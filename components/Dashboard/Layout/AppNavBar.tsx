@@ -69,6 +69,8 @@ export default function PrimarySearchAppBar({ isLoggedIn }: IAppNavbar) {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
+  const { addNotification } = useNotifications();
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -91,7 +93,7 @@ export default function PrimarySearchAppBar({ isLoggedIn }: IAppNavbar) {
 
   const handleLogout = async () => {
     const success = await SignOut();
-    const { addNotification } = useNotifications();
+
     if (success) {
       addNotification({ id: "Id 1", message: "Messages" });
     } else {
